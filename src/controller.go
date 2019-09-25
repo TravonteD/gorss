@@ -333,7 +333,7 @@ func (c *Controller) SelectFeed(row, col int) {
 		return c.articles[i].published.String() > c.articles[j].published.String()
 	})
 	r, _ := c.win.feeds.GetSelection()
-	cell := c.win.feeds.GetCell(r, 2)
+	cell := c.win.feeds.GetCell(r, 0)
 	ref := cell.GetReference()
 	if ref != nil {
 		c.ShowArticles(ref.(*Article).feed)

@@ -341,30 +341,8 @@ func (w *Window) ClearArticles() {
 // ClearFeeds resets the feed window
 func (w *Window) ClearFeeds() {
 	w.feeds.Clear()
-	w.feeds.SetTitle(fmt.Sprintf("%s Feeds", w.c.theme.FeedIcon)).SetTitleColor(tcell.GetColor(w.c.theme.FeedBorderTitle))
+	w.feeds.SetTitle(fmt.Sprintf("%s Feeds (unread/total)", w.c.theme.FeedIcon)).SetTitleColor(tcell.GetColor(w.c.theme.FeedBorderTitle))
 	w.nFeeds = 0
-
-	ts := tview.NewTableCell("Total")
-	ts.SetAlign(tview.AlignLeft)
-	ts.Attributes |= tcell.AttrBold
-	ts.SetSelectable(false)
-	ts.SetTextColor(tcell.GetColor(w.c.theme.TableHead))
-	w.feeds.SetCell(0, 0, ts)
-
-	ts = tview.NewTableCell("Unread")
-	ts.SetAlign(tview.AlignLeft)
-	ts.Attributes |= tcell.AttrBold
-	ts.SetSelectable(false)
-	ts.SetTextColor(tcell.GetColor(w.c.theme.TableHead))
-	w.feeds.SetCell(0, 1, ts)
-
-	ts = tview.NewTableCell("Feed")
-	ts.SetAlign(tview.AlignLeft)
-	ts.Attributes |= tcell.AttrBold
-	ts.SetTextColor(tcell.GetColor(w.c.theme.TableHead))
-	ts.SetSelectable(false)
-	w.feeds.SetCell(0, 2, ts)
-
 	w.feeds.SetSelectable(true, false)
 }
 
@@ -384,21 +362,9 @@ func (w *Window) AddToFeeds(name string, unread, total int, ref *Article) {
 		color = w.c.theme.FeedNames[idx]
 	}
 
-	nc := tview.NewTableCell(fmt.Sprintf("%d", total))
+  nc := tview.NewTableCell(fmt.Sprintf("%s (%d/%d)", name, unread, total))
 	nc.SetAlign(tview.AlignLeft)
 	w.feeds.SetCell(w.nFeeds, 0, nc)
-	nc.SetSelectable(true)
-	nc.SetTextColor(tcell.GetColor(w.c.theme.TotalColumn))
-
-	nc = tview.NewTableCell(fmt.Sprintf("%d", unread))
-	nc.SetAlign(tview.AlignLeft)
-	w.feeds.SetCell(w.nFeeds, 1, nc)
-	nc.SetSelectable(true)
-	nc.SetTextColor(tcell.GetColor(w.c.theme.UnreadColumn))
-
-	nc = tview.NewTableCell(fmt.Sprintf("%s", name))
-	nc.SetAlign(tview.AlignLeft)
-	w.feeds.SetCell(w.nFeeds, 2, nc)
 	nc.SetSelectable(true)
 	nc.SetTextColor(tcell.GetColor(color))
 	nc.SetReference(ref)
