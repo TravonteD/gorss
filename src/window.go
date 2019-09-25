@@ -45,7 +45,7 @@ func (w *Window) Init(inputFunc func(*tcell.EventKey) *tcell.EventKey, c *Contro
 	w.feeds.SetBorder(true)
 	w.feeds.SetBorderPadding(1, 1, 1, 1)
 	w.feeds.SetBorderColor(tcell.GetColor(w.c.theme.FeedBorder))
-	w.feeds.SetTitle(fmt.Sprintf("%s Feeds", w.c.theme.FeedIcon)).SetTitleColor(tcell.GetColor(w.c.theme.FeedBorderTitle))
+	w.feeds.SetTitle(fmt.Sprintf("%s Feeds (unread/total)", w.c.theme.FeedIcon)).SetTitleColor(tcell.GetColor(w.c.theme.FeedBorderTitle))
 
 	w.articles = tview.NewTable()
 	w.articles.SetTitleAlign(tview.AlignLeft)
